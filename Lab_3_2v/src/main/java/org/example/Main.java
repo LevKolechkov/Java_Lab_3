@@ -16,8 +16,9 @@ public class Main {
         originalMap.put("One", 1);
         originalMap.put("Two", 2);
         originalMap.put("Three", 3);
+        originalMap.put("Four", 1);
 
-        Map<Integer, String> reversedMap = fifthTask(originalMap);
+        Map<Integer, List<String>> reversedMap = fifthTask(originalMap);
 
         System.out.println("Original map: " + originalMap);
         System.out.println("Reversed map: " + reversedMap);
@@ -278,11 +279,20 @@ public class Main {
     }
 
     // Задание 5
-    public static <K, V> Map<V, K> fifthTask(Map<K, V> inputMap){
-        Map<V, K> reversedMap = new HashMap<>();
-        for (Map.Entry<K, V> entry : inputMap.entrySet()){
-            reversedMap.put(entry.getValue(), entry.getKey());
+    public static <K, V> Map<V, List<K>> fifthTask(Map<K, V> inputMap) {
+        Map<V, List<K>> reversedMap = new HashMap<>();
+
+        for (Map.Entry<K, V> entry : inputMap.entrySet()) {
+            V value = entry.getValue();
+            K key = entry.getKey();
+
+            // Если значение уже есть в reversedMap, добавляем ключ в список
+            if (!reversedMap.containsKey(value)) {
+                reversedMap.put(value, new ArrayList<>());
+            }
+            reversedMap.get(value).add(key);
         }
+
         return reversedMap;
     }
 
